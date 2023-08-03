@@ -5,6 +5,70 @@
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   <style>
+	.scrolling {
+		
+	    overflow:hidden;
+	    overflow-y: scroll;
+	    height: 550px;
+		
+	}
+	
+	table{
+		
+		width: 100%;
+	}
+
+	dropbtn {
+	  background-color: transparent;
+	  color: white;
+	  padding: 16px;
+	  font-size: 8px;
+	  color: white;
+	  border: 1px white;
+	}
+
+	
+	.dropdown {
+	  position: relative;
+	  display: inline-block;
+	}
+
+	
+	.dropdown-content {
+	  display: none;
+	  position: absolute;
+	  background-color: white;
+	  min-width: 100px;
+		right:5px;	  
+	  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	  z-index: 1;
+	  
+	}
+
+	
+	.dropdown-content button {
+	  color: black;
+	  padding: 12px 16px;
+	  text-decoration: none;
+	  display: block;
+	  min-width: 150px;	  
+	}
+
+	.dropdown-content button:hover {background-color: #ddd;}
+
+
+	.dropdown:hover .dropdown-content {display: block;}
+	
+	.sidebyside{
+		float:left; 
+		display:inline;
+	}
+
+   </style>
+
+	<script src="/client.js"></script>
+
  </head>
 
 
@@ -16,124 +80,162 @@
                 <div class="banner bg-dark text-light d-flex justify-content-between align-items-center p-3">
                     <h1>Sterling Engine</h1>
                       <% if(UserID == 0){ %>
-			 <form action="/signuppage" method="GET">
-				<button type="submit" class="btn btn-success">Sign Up</button>
-		    	</form>
+			<div>
+				<form action="/loginpage" method="GET">
+	                                <button type="submit" class="btn btn-success sidebyside">Log In</button>
+	                        </form>
+
+				 <form action="/signuppage" method="GET">
+					<button type="submit" class="btn btn-success sidebyside">Sign Up</button>
+			    	</form>
+			</div>
 		      <% } %>
 
 		  	<% if(UserID != 0){ %>
-   				<form action="/deleteacc" method="GET">
-                        		<button type="submit" class="btn btn-success">Delete Account</button>
-                    		</form>
+
+				<div class="dropdown">
+				  <button class="dropbtn">Settings</button>
+				  <div class="dropdown-content">
+
+				   <form action="/logout" method="GET">
+                                        <button type="submit" class="btn btn-success">Log Out</button>
+                                    </form>
+
+
+				    <form action="/changeusernamepage" method="GET">
+                                        <button type="submit" class="btn btn-success">Change Username</button>
+                                    </form>
+
+				    <form action="/deleteacc" method="GET">
+                                        <button type="submit" class="btn btn-success">Delete Account</button>
+                                    </form>
+
+
+				  </div>
+				</div>
 			<% } %>
 
-			<% if(UserID != 0){ %>
-                                <form action="/changeusernamepage" method="GET">
-                                        <button type="submit" class="btn btn-success">Change Username</button>
-                                </form>
-                        <% } %>
+
 
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-4 bg-light p-4">
-                <div class="window mb-4">
+                <form action="sort" method="GET">
                     <h2>Sort By</h2>
-                    <div class="form-check">
-                        <input type="radio" name="sort" id="sort-price-high-low" class="form-check-input" value="price_high_low">
-                        <label for="sort-price-high-low" class="form-check-label">Price High-to-Low</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="radio" name="sort" id="sort-price-low-high" class="form-check-input" value="price_low_high">
-                        <label for="sort-price-low-high" class="form-check-label">Price Low-to-High</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="radio" name="sort" id="sort-sterling-rating" class="form-check-input" value="sterling_rating">
-                        <label for="sort-sterling-rating" class="form-check-label">Sterling Rating</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="radio" name="sort" id="sort-metacritic-rating" class="form-check-input" value="metacritic_rating">
-                        <label for="sort-metacritic-rating" class="form-check-label">Metacritic Rating</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="radio" name="sort" id="sort-steam-users" class="form-check-input" value="steam_users">
-                        <label for="sort-steam-users" class="form-check-label">Steam Users</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="radio" name="sort" id="sort-sterling-users" class="form-check-input" value="sterling_users">
-                        <label for="sort-sterling-users" class="form-check-label">Sterling Users</label>
-                    </div>
-                </div>
-                <div class="window">
-                    <h2>Filter</h2>
-                    <div class="form-group">
-                        <label for="price">Price:</label>
-                        <input type="range" id="price" name="price" class="form-control-range" min="0" max="100" value="50">
-                    </div>
-                    <div class="form-group">
-                        <label for="release-date">Release Date:</label>
-                        <input type="range" id="release-date" name="release-date" class="form-control-range" min="1990" max="2023" value="2010">
-                    </div>
-                    <div class="form-group">
-                        <label for="genre">Genre:</label>
-                        <select id="genre" name="genre" class="form-control">
-                            <option value="action">Action</option>
-                            <option value="adventure">Adventure</option>
-                            <!-- Add more genres here -->
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="category">Category:</label>
-                        <select id="category" name="category" class="form-control">
-                            <option value="single_player">Single Player</option>
-                            <option value="multiplayer">Multiplayer</option>
-                            <!-- Add more categories here -->
-                        </select>
-                    </div>
-                </div>
+		    <div class="window mb-4">	
+	                    <div class="form-check">
+	                        <input type="radio" name="sort" id="sort-price-high-low" class="form-check-input" value="g.currPrice DESC">
+	                        <label for="sort-price-high-low" class="form-check-label">Price High-to-Low</label>
+	                    </div>
+	                    <div class="form-check">
+	                        <input type="radio" name="sort" id="sort-price-low-high" class="form-check-input" value="g.currPrice ASC">
+	                        <label for="sort-price-low-high" class="form-check-label">Price Low-to-High</label>
+	                    </div>
+	                    <div class="form-check">
+	                        <input type="radio" name="sort" id="sort-sterling-rating" class="form-check-input" value="r.LocalRating DESC">
+	                        <label for="sort-sterling-rating" class="form-check-label">Sterling Rating</label>
+	                    </div>
+	                    <div class="form-check">
+	                        <input type="radio" name="sort" id="sort-metacritic-rating" class="form-check-input" value="r.MediaRating DESC">
+	                        <label for="sort-metacritic-rating" class="form-check-label">Metacritic Rating</label>
+	                    </div>
+	                    <div class="form-check">
+	                        <input type="radio" name="sort" id="sort-steam-users" class="form-check-input" value="d.ActiveUsers DESC">
+	                        <label for="sort-steam-users" class="form-check-label">Steam Users</label>
+	                    </div>
+	                    <div class="form-check">
+	                        <input type="radio" name="sort" id="sort-sterling-users" class="form-check-input" value="own.NumOwners DESC">
+	                        <label for="sort-sterling-users" class="form-check-label">Sterling Users</label>
+	                    </div>
+			    			    
+		    </div>
+                
+	                <div class="window">
+	                    <h2>Filter</h2>
+	                    <div class="form-group">
+				<div >
+		                        <br>
+					<p class="sidebyside">Price from &nbsp</p>
+		                        <input class="sidebyside" type="number" name="minPrice" id="minPrice" class="form-control" style="width: 100px;" placeholder="$0.00">
+					<p class="sidebyside">&nbsp to &nbsp </p>
+					<input class="sidebyside" type="number" name="maxPrice" id="maxPrice" class="form-control" style="width: 100px;" placeholder="$4.99">
+				</div>
+	                    </div>
+	                    <div class="form-group">
+				<div>
+		                        <br>
+					<p class="sidebyside">Released between &nbsp </p>
+		                        <input class="sidebyside" type="number" name="minYear" id="minYear" class="form-control" style="width: 100px;" placeholder="1998">
+					<p class="sidebyside">&nbsp and &nbsp</p>
+	                                <input class="sidebyside" type="number" name="maxYear" id="maxYear" class="form-control" style="width: 100px;" placeholder="2023">
+				</div>
+	                    </div
+	                       
+	                   
+	                </div>
+			<br>
+			<input type="submit" value="Submit">
+		</form>
+		</div>
             </div>
             <div class="col-md-8 p-4">
                
 		<form action="search" method="POST">
 	           <div class="form-group">
 	             <label for="search">Search</label>
-	             <input type="text" class="form-control col-lg-9" id="search"  placeholder="Search..." name="search">
+	             <input type="text" class="form-control col-lg-9" id="search"  placeholder="Search..." name="search" style="width: 950px;">
 	           </div>
 	           <button type="submit" class="btn btn-primary">Search</button>
+			<br>
 	         </form>
 
-  
-	      <table border="1">
-	        <tr>
-	            <th>Game</th>
-	            <th>Price</th>
-	            <th>Rating</th>
-		    <th># of Sterling Owners</th>
-		    <th>Avg Sterling Rating</th>	            
-	        </tr>
-	        
-	        <%
-	        if(gamesData.length!=0){
-	        var i=1;
-	        gamesData.forEach(function(data){
-	        %>
-	        <tr>
-	            
-	            <td><%=data.Game %></td>
-	            <td><%=data.CurrPrice %></td>
-	            <td><%=data.Rating %></td>
-		    <td><%=data.NumOwners %></td>
-		    <td><%=data.LocalRating %></td>
-	       
-	        </tr>
-	        <%  i++; }) %>
-	        <% } else{ %>
-	            <tr>
-	                <td colspan="7">No Data Found</td>
-	            </tr>
-	        <% } %>
-	    </table>
+  		<div class="scrolling">
+		      <table border=1 frame=void rules=rows>
+		        <tr>
+		            <th>Game</th>
+		            <th>Price</th>
+			    <th>Release Date</th>
+		            <th>MediaCritic Rating</th>
+			    <th>Sterling Rating</th>
+			    <th>Steam Players</th>
+			    <th>Sterling Players</th> 	            
+		        </tr>
+		        
+		        <%
+		        if(gamesData.length!=0){
+		        var i=1;
+		        gamesData.forEach(function(data){
+		        %>
+		        <tr>
+		            
+		            <td><%=data.Game %></td>
+		            <td><%=data.CurrPrice %></td>
+			    <td><%=data.ReleaseDate %></td>
+		            <td><%=data.Rating %></td>
+			    <td><%=data.LocalRating %></td>
+			    <td><%=data.ActiveUsers %></td>
+			    <td><%=data.NumOwners %></td> 
+<!--			    <% if(UserID != 0){ %>
+                                <button id="toggleButton">+</button>
+			        <div id="drop" class="hidden">
+				  <p>Rate this game out of 100:</p>
+			          <input type="number" placeholder="Enter Rating" max="100">
+			          <button id="submitBtn">Rate</button>
+			        </div>
+
+                            <% } %>
+-->		       
+		        </tr>
+		        <%  i++; }) %>
+		        <% } else{ %>
+		            <tr>
+		                <td colspan="7">No Data Found</td>
+		            </tr>
+		        <% } %>
+		    </table>
+		</div>
             </div>
         </div>
     </div>
